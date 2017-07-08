@@ -5,5 +5,5 @@ A stock ticker which collects data from googlefinance csv files and presents it 
 Webpage built using flask, there are the typical options for time periods.
 
 ## Features Pending
-Dynamic update of graphs
+Dynamic update of graphs  
 Tracking Sentiment
