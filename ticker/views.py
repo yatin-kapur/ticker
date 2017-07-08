@@ -2,6 +2,9 @@ from ticker import app
 from flask import render_template, request
 from . import plotticker
 import os
+from googlefinance import getQuotes
+import json
+import urllib
 
 @app.route('/')
 @app.route('/index')
@@ -12,6 +15,12 @@ def index():
 def send():
     if request.method == 'POST':
         symbol = request.form['symbol']
+        symbol = symbol.upper()
+
+        try:
+            a = json.dumps(getQuotes(symbol))
+        except urllib.error.HTTPError:
+            return render_template('index.html', error='Invalid Symbol')
 
         day_dict={'1D': 1, '5D': 5}
         mny_dict={'1M': 1, '3M': 3, '1Y': 12, '5Y': 60, '10Y': 120}
@@ -33,7 +42,8 @@ def send():
             else:
                 time_s = str(time) + ' Month(s)'
 
-        filelist = [f for f in os.listdir("ticker/static/pics") if f.endswith(".jpg")]
+        filelist = [f for f in os.listdir("ticker/static/pics")
+                    if f.endswith(".jpg")]
         for f in filelist:
             os.remove("ticker/static/pics/"+f)
 
