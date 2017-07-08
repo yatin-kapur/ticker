@@ -1,6 +1,7 @@
 from ticker import app
-from flask import render_template, request, redirect
+from flask import render_template, request
 from . import plotticker
+import os
 
 @app.route('/')
 @app.route('/index')
@@ -32,11 +33,15 @@ def send():
             else:
                 time_s = str(time) + ' Month(s)'
 
-        plotticker.data_plot(symbol, time, dmy)
+        filelist = [f for f in os.listdir("ticker/static/pics") if f.endswith(".jpg")]
+        for f in filelist:
+            os.remove("ticker/static/pics/"+f)
 
-        image = 'graph.jpg'
+        plotticker.data_plot(symbol, time, dmy)
+        image = str(symbol.lower()) + str(time) + str(dmy.lower()) + '.jpg'
 
         return render_template('index.html', symbol=symbol.upper(), time=time_s
                                ,reset=1, image=image)
+
 
     return render_template('index.html')

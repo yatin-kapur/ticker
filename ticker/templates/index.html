@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="width:100">
 
 	<head>
 		<title>$ticker</title>
@@ -8,21 +8,21 @@
 	</head>
 
 	<body class="body" style="background-color:black">
-		<div class="container-fluid" style="border-bottom:solid 1px; background-color:#C9CBCB">
+		<div style="border-bottom:solid 1px; background-color:#C9CBCB">
 			<div style=class="col-md-12">
 				</br>
 				<h1 style="margin-left: 4vw">Stock Ticker </br><small>Only NASDAQ Symbols</small></h1></br>
 			</div>
 		</div>
 
-		<div class="container-fluid col-md-12 col-md-offset-1">
+		<div class="col-md-10" style="margin-left:10vw">
 			<br><p style="color:#FFF" class="lead">This is a web stock ticker, made using matplotlib in the <code style="color:black">dark_background</code> style, and with data collected from googlefinance.
 			<br>
-			Code can be found here: [link]</p>
+			Code can be found <a href="https://github.com/Yatin-Kapur/ticker">here</a></p>
 		</div>
 
 
-		<div class="container-fluid col-md-3 col-md-offset-1">
+		<div class="col-md-2" style="margin-left:10vw; margin-right:5vw">
 			<br>
 			<br>
 
@@ -46,10 +46,10 @@
 			</form>			
 		</div>
 
-		<div class="container-fluid col-md-offset-1 col-md-6">
+		<div class="col-md-4" style="margin-left:10vw; margin-right:5vw">
 			{% if reset %}
 			<h2>Stock Ticker for the Previous {{ time }} <small> {{ symbol }} </small> </h2>
-			<img src="static/{{ image }}" style="width:40vw">
+			<img src="static/pics/{{ image }}" style="min-width: 350px;align:center; width:40vw">
 			{% endif %}
 		</div>
 
