@@ -18,7 +18,10 @@ def send():
         symbol = symbol.upper()
 
         try:
-            a = json.dumps(getQuotes(symbol))
+            data = json.dumps(getQuotes(symbol))
+            jdata = json.loads(data)
+            last_trade = jdata[0]['LastTradePrice']
+            last_time = jdata[0]['LastTradeTime']
         except urllib.error.HTTPError:
             return render_template('index.html', error='Invalid Symbol')
 
@@ -51,7 +54,8 @@ def send():
         image = str(symbol.lower()) + str(time) + str(dmy.lower()) + '.jpg'
 
         return render_template('index.html', symbol=symbol.upper(), time=time_s
-                               ,reset=1, image=image)
+                               ,reset=1, image=image,
+                               current=[last_trade, last_time])
 
 
     return render_template('index.html')

@@ -31,7 +31,7 @@
 		</div>
 
 
-		<div class="col-md-2" style="margin-left:10vw; margin-right:5vw">
+		<div class="col-md-3" style="margin-left:10vw; margin-right:5vw">
 			<br>
 			<br>
 
@@ -55,12 +55,18 @@
 			</form>			
 		</div>
 
-		<div class="col-md-4" style="margin-left:10vw; margin-right:5vw">
+		<div class="col-md-5" style="margin-left:10vw; margin-right:5vw">
 			{% if reset %}
 			<h2>Stock Ticker for the Previous {{ time }} <small> {{ symbol }} </small> </h2>
 			<img src="static/pics/{{ image }}" style="min-width: 350px;align:center; width:40vw">
 			{% endif %}
 		</div>
+
+		<!--
+	  <div class="col-md-2">
+			<h3>Last Traded for</h3>
+			<h4>${{ current[0] }} at {{ current[1] }}</h4>
+		</div>-->
 
 	</body>
 </html>
