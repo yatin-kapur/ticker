@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<title>$ticker</title>
+		<meta charset="UTF-8">
+		<link rel='stylesheet' href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type='text.css'>
+	</head>
+
+	<body class="body" style="background-color:black">
+		<div class="container-fluid" style="border-bottom:solid 1px; background-color:#C9CBCB">
+			<div style=class="col-md-12">
+				</br>
+				<h1 style="margin-left: 4vw">Stock Ticker </br><small>Only NASDAQ Symbols</small></h1></br>
+			</div>
+		</div>
+
+		<div class="container-fluid col-md-12 col-md-offset-1">
+			<br><p style="color:#FFF" class="lead">This is a web stock ticker, made using matplotlib in the <code style="color:black">dark_background</code> style, and with data collected from googlefinance.
+			<br>
+			Code can be found here: [link]</p>
+		</div>
+
+
+		<div class="container-fluid col-md-3 col-md-offset-1">
+			<br>
+			<br>
+
+			<form action="" method="post">
+				<div class="input-group input-group">
+					<span class="input-group-addon" id="sizing-addon1">$</span>
+					<input required name="symbol" type="text" class="form-control" placeholder="AAPL" aria-describedby="sizing-addon1">
+				</div>
+
+				<br>
+
+				<div class="list-group">
+					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="one_day" value="1D">One Day</button>
+					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="five_days" value="5D">Five Days</button>
+					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="one_month" value="1M">One Month</button>
+					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="three_months" value="3M">Three Months</button>
+					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="one_year" value="1Y">One Year</button>
+					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="five_years" value="5Y">Five Years</button>
+					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="ten_years" value="10Y">Ten Years</button>
+				</div>
+			</form>			
+		</div>
+
+		<div class="container-fluid col-md-offset-1 col-md-6">
+			{% if reset %}
+			<h2>Stock Ticker for the Previous {{ time }} <small> {{ symbol }} </small> </h2>
+			<img src="static/{{ image }}" style="width:40vw">
+			{% endif %}
+		</div>
+
+	</body>
+</html>
+
