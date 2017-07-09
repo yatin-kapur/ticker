@@ -1,6 +1,6 @@
 from ticker import app
 from flask import render_template, request
-from . import plotticker
+from . import plotticker, validate
 import os
 from googlefinance import getQuotes
 import json
@@ -19,6 +19,10 @@ def send():
         symbol = request.form['symbol']
         symbol = symbol.upper()
 
+        if validate.check(symbol) == "error":
+            return render_template('index.html',
+                                   error='Please Enter a Valid Symbol')
+
         try:
             data = json.dumps(getQuotes(symbol))
             jdata = json.loads(data)
@@ -29,7 +33,8 @@ def send():
             last_time = datetime.datetime.strptime(last_time, "%Y-%m-%dT%H:%M:%S")
             last_time = last_time.strftime("%B %d, %H:%M:%S")
         except urllib.error.HTTPError:
-            return render_template('index.html', error='Please Enter a Valid Symbol')
+            return render_template('index.html',
+                                   error='Please Enter a Valid Symbol')
 
         day_dict={'1D': 1, '5D': 5}
         mny_dict={'1M': 1, '3M': 3, '1Y': 12, '5Y': 60, '10Y': 120}
