@@ -29,7 +29,7 @@ def send():
             last_time = datetime.datetime.strptime(last_time, "%Y-%m-%dT%H:%M:%S")
             last_time = last_time.strftime("%B %d, %H:%M:%S")
         except urllib.error.HTTPError:
-            return render_template('index.html', error='Invalid Symbol')
+            return render_template('index.html', error='Please Enter a Valid Symbol')
 
         day_dict={'1D': 1, '5D': 5}
         mny_dict={'1M': 1, '3M': 3, '1Y': 12, '5Y': 60, '10Y': 120}
