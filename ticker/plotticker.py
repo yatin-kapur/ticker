@@ -124,7 +124,7 @@ def find_data_days(symbol, interval_s, days):
         title = symbol + " Five Day Summary"
         plt.suptitle(title)
 
-    filename = str(symbol.lower()) + str(days) + 'd.jpg'
+    filename = str(symbol.lower()) + str(days) + 'd.png'
 
     fig.savefig('ticker/static/pics/'+filename, bbox_inches='tight', dpi=300)
 
@@ -220,7 +220,7 @@ def find_data_mny(symbol, months):
     plt.ylabel('Price')
     plt.title(title)
 
-    filename = str(symbol.lower()) + str(months) + 'm.jpg'
+    filename = str(symbol.lower()) + str(months) + 'm.png'
     fig.savefig('ticker/static/pics/'+filename, bbox_inches='tight', dpi=300)
 
 def data_plot(symbol, time, dmy):

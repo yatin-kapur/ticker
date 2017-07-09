@@ -52,12 +52,12 @@ def send():
                 time_s = str(time) + ' Month(s)'
 
         filelist = [f for f in os.listdir("ticker/static/pics")
-                    if f.endswith(".jpg")]
+                    if f.endswith(".png")]
         for f in filelist:
             os.remove("ticker/static/pics/"+f)
 
         plotticker.data_plot(symbol, time, dmy)
-        image = str(symbol.lower()) + str(time) + str(dmy.lower()) + '.jpg'
+        image = str(symbol.lower()) + str(time) + str(dmy.lower()) + '.png'
 
         return render_template('index.html', symbol=symbol.upper(), time=time_s
                                ,reset=1, image=image,
