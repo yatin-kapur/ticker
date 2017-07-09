@@ -38,7 +38,11 @@
 			<form action="" method="post">
 				<div class="input-group input-group">
 					<span class="input-group-addon" id="sizing-addon1">$</span>		
-					<input required name="symbol" type="text" class="form-control" placeholder="AAPL" aria-describedby="sizing-addon1">
+					{% if reset %}
+					<input required name="symbol" type="text" class="form-control" placeholder="AAPL" value="{{ symbol }}"> 				
+					{% else %}
+					<input required name="symbol" type="text" class="form-control" placeholder="AAPL">
+					{% endif %}
 				</div>
 
 				<br>
@@ -52,21 +56,23 @@
 					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="five_years" value="5Y">Five Years</button>
 					<button style="border-radius:1; margin:2px 0" class="list-group-item" type="submit" name="ten_years" value="10Y">Ten Years</button>
 				</div>
-			</form>			
+			</form>	
+			{% if reset %}
+
+			<div style="text-align:right"><h3 style="color:#FFF">Last Traded for<p style="color:#00e673">${{ current[0] }}</p>on<p style="color:#cc0000">{{ current[1] }}</p></h3>
+			</div>
+
+			{% endif %}
+
 		</div>
 
 		<div class="col-md-5" style="margin-left:10vw; margin-right:5vw">
 			{% if reset %}
 			<h2>Stock Ticker for the Previous {{ time }} <small> {{ symbol }} </small> </h2>
 			<img src="static/pics/{{ image }}" style="min-width: 350px;align:center; width:40vw">
+						
 			{% endif %}
 		</div>
-
-		<!--
-	  <div class="col-md-2">
-			<h3>Last Traded for</h3>
-			<h4>${{ current[0] }} at {{ current[1] }}</h4>
-		</div>-->
 
 	</body>
 </html>

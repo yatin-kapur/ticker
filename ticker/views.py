@@ -5,6 +5,8 @@ import os
 from googlefinance import getQuotes
 import json
 import urllib
+import datetime
+import re
 
 @app.route('/')
 @app.route('/index')
@@ -21,7 +23,11 @@ def send():
             data = json.dumps(getQuotes(symbol))
             jdata = json.loads(data)
             last_trade = jdata[0]['LastTradePrice']
-            last_time = jdata[0]['LastTradeTime']
+            last_time = jdata[0]['LastTradeDateTime']
+            last_time = last_time[:-1]
+            re.sub(last_time, 'T', ' ')
+            last_time = datetime.datetime.strptime(last_time, "%Y-%m-%dT%H:%M:%S")
+            last_time = last_time.strftime("%B %d, %H:%M:%S")
         except urllib.error.HTTPError:
             return render_template('index.html', error='Invalid Symbol')
 

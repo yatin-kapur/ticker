@@ -204,7 +204,7 @@ def find_data_mny(symbol, months):
         if years < 10:
             period = date_map[years] + " Year"
         else:
-            period = str(years) + " Year"
+            period = str(int(years)) + " Year"
     else:
         period = str(months) + " Month"
 
