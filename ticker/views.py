@@ -19,10 +19,6 @@ def send():
         symbol = request.form['symbol']
         symbol = symbol.upper()
 
-        if validate.check(symbol) == "error":
-            return render_template('index.html',
-                                   error='Please Enter a Valid Symbol')
-
         try:
             data = json.dumps(getQuotes(symbol))
             jdata = json.loads(data)
@@ -33,6 +29,10 @@ def send():
             last_time = datetime.datetime.strptime(last_time, "%Y-%m-%dT%H:%M:%S")
             last_time = last_time.strftime("%B %d, %H:%M:%S")
         except urllib.error.HTTPError:
+            return render_template('index.html',
+                                   error='Please Enter a Valid Symbol')
+
+        if validate.check(symbol) == "error":
             return render_template('index.html',
                                    error='Please Enter a Valid Symbol')
 
