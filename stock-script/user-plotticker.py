@@ -1,10 +1,11 @@
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import urllib
 import datetime
-
 plt.style.use('dark_background')
 
 def fix_dates(csv, interval_s):

@@ -102,7 +102,7 @@ def find_data_days(symbol, interval_s, days):
         title = symbol + " One Day Summary"
         ax.plot_date(data_df.TIME, data_df.CLOSE,
                          color="#FFBF00", linewidth=1, fmt='-')
-        ax.set_xlabel(dates[1].strftime("%b %d"))
+        ax.set_xlabel(dates[0].strftime("%b %d"))
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
         plt.xticks(rotation = 45)
         plt.ylabel('Price')
