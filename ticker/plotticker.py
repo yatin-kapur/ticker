@@ -8,6 +8,7 @@ import matplotlib.dates as mdates
 import urllib
 import datetime
 from pytz import timezone
+import time
 
 def fix_dates(csv, interval_s):
     """
@@ -87,12 +88,8 @@ def find_data_days(symbol, interval_s, days):
     data_df['DATE'] = [datetime.datetime.date(data_df.loc[x, 'TIME'])
                        for x in range(len(dates))]
 
-    # making all data integers
+    # making close values floats
     data_df.loc[:, 'CLOSE'] = np.float64(data_df.loc[:, 'CLOSE'])
-    data_df.loc[:, 'HIGH'] = np.float64(data_df.loc[:, 'HIGH'])
-    data_df.loc[:, 'LOW'] = np.float64(data_df.loc[:, 'LOW'])
-    data_df.loc[:, 'OPEN'] = np.float64(data_df.loc[:, 'OPEN'])
-    data_df.loc[:, 'VOLUME'] = np.float64(data_df.loc[:, 'VOLUME'])
 
     # plotting graph
     plt.style.use('dark_background')
@@ -128,9 +125,13 @@ def find_data_days(symbol, interval_s, days):
         title = symbol + " Five Day Summary"
         plt.suptitle(title)
 
-    filename = str(symbol.lower()) + str(days) + 'd.png'
+    filename = str(symbol.lower()) + str(days) + 'd' + str(int(time.time())) \
+        + '.png'
 
     fig.savefig('ticker/static/pics/'+filename, bbox_inches='tight', dpi=300)
+
+    return filename
+
 
 def date_url(date):
     """
@@ -184,10 +185,6 @@ def find_data_mny(symbol, months):
         data_df.loc[i] = data[i]
 
     data_df.loc[:, 'CLOSE'] = np.float64(data_df.loc[:, 'CLOSE'])
-    data_df.loc[:, 'HIGH'] = np.float64(data_df.loc[:, 'HIGH'])
-    data_df.loc[:, 'LOW'] = np.float64(data_df.loc[:, 'LOW'])
-    data_df.loc[:, 'OPEN'] = np.float64(data_df.loc[:, 'OPEN'])
-    data_df.loc[:, 'VOLUME'] = np.float64(data_df.loc[:, 'VOLUME'])
 
     # getting dates to be dates
     for i in range(len(data_df)):
@@ -224,17 +221,19 @@ def find_data_mny(symbol, months):
     plt.ylabel('Price')
     plt.title(title)
 
-    filename = str(symbol.lower()) + str(months) + 'm.png'
+    filename = str(symbol.lower()) + str(months) + 'm' + str(int(time.time())) \
+        + '.png'
     fig.savefig('ticker/static/pics/'+filename, bbox_inches='tight', dpi=300)
 
-def data_plot(symbol, time, dmy):
+    return filename
+
+def data_plot(symbol, tyme, dmy):
     """
     decides what type of plot to build
     """
     if dmy.upper() == 'M':
-        find_data_mny(str(symbol), int(time))
+        return find_data_mny(str(symbol), int(tyme))
     elif dmy.upper() == 'Y':
-        find_data_mny(str(symbol), int(time) * 12)
+        return find_data_mny(str(symbol), int(tyme) * 12)
     elif dmy.upper() == 'D':
-        find_data_days(str(symbol), 60, int(time))
-
+        return find_data_days(str(symbol), 60, int(tyme))

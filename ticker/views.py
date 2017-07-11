@@ -7,6 +7,8 @@ import json
 import urllib
 import datetime
 import re
+from threading import Thread
+import time
 
 @app.route('/')
 @app.route('/index')
@@ -24,10 +26,14 @@ def send():
             jdata = json.loads(data)
             last_trade = jdata[0]['LastTradePrice']
             last_time = jdata[0]['LastTradeDateTime']
-            last_time = last_time[:-1]
-            re.sub(last_time, 'T', ' ')
-            last_time = datetime.datetime.strptime(last_time, "%Y-%m-%dT%H:%M:%S")
-            last_time = last_time.strftime("%B %d, %H:%M:%S")
+            if last_time == '':
+                last_time = 0
+            else:
+                last_time = last_time[:-1]
+                re.sub(last_time, 'T', ' ')
+                last_time = datetime.datetime.strptime(last_time,
+                                                       "%Y-%m-%dT%H:%M:%S")
+                last_time = last_time.strftime("%B %d, %H:%M:%S")
         except urllib.error.HTTPError:
             return render_template('index.html',
                                    error='Please Enter a Valid Symbol')
@@ -40,33 +46,32 @@ def send():
         mny_dict={'1M': 1, '3M': 3, '1Y': 12, '5Y': 60, '10Y': 120}
 
         time_s = ''
-        time = 0
+        time_l = 0
 
         actual = list(request.form.keys())[1]
 
         if request.form[actual] in ['1D', '5D']:
-            time = day_dict[request.form[actual]]
-            time_s = str(time) + ' Day(s)'
+            time_l = day_dict[request.form[actual]]
+            time_s = str(time_l) + ' Day(s)'
             dmy = 'D'
         else:
-            time = mny_dict[request.form[actual]]
+            time_l = mny_dict[request.form[actual]]
             dmy = 'M'
-            if time > 11:
-                time_s = str(int(time/12)) + ' Year(s)'
+            if time_l > 11:
+                time_s = str(int(time_l/12)) + ' Year(s)'
             else:
-                time_s = str(time) + ' Month(s)'
+                time_s = str(time_l) + ' Month(s)'
 
-        filelist = [f for f in os.listdir("ticker/static/pics")
-                    if f.endswith(".png")]
-        for f in filelist:
-            os.remove("ticker/static/pics/"+f)
-
-        plotticker.data_plot(symbol, time, dmy)
-        image = str(symbol.lower()) + str(time) + str(dmy.lower()) + '.png'
+        image = plotticker.data_plot(symbol, time_l, dmy)
+        delete_image = Thread(target=remove, args=(image,))
+        delete_image.start()
 
         return render_template('index.html', symbol=symbol.upper(), time=time_s
                                ,reset=1, image=image,
                                current=[last_trade, last_time])
 
-
     return render_template('index.html')
+
+def remove(image):
+    time.sleep(10)
+    os.remove('ticker/static/pics/'+image)
