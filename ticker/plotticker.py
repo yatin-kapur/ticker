@@ -37,12 +37,9 @@ def fix_dates(csv, interval_s):
 
     return ret_date
 
-def find_data_days(symbol, interval_s, days):
+def csv_ret(symbol, interval_s, days):
     """
-    finding data of the symbol for the days specified [1-10 days at most]
-    symbol -> stock symbol
-    interval_s -> intervals to get data in (seconds)
-    days -> how many days past data to collect
+    returns clean csv for the symbol and time specified
     """
     if interval_s < 60:
         interval_s = 60
@@ -50,7 +47,7 @@ def find_data_days(symbol, interval_s, days):
     if days != 1:
         days = 5
 
-    # getting teh adata
+    # getting the data
     symbol = symbol.upper()
     url = "http://www.google.com/finance/getprices?q={0}".format(symbol)
     url += "&i={0}&p={1}d&f=d,o,h,l,c,v".format(interval_s, days)
@@ -58,6 +55,18 @@ def find_data_days(symbol, interval_s, days):
 
     # removing title headers and adding it to dataframe
     csv = csv[7:]
+
+    return csv
+
+def find_data_days(symbol, interval_s, days):
+    """
+    finding data of the symbol for the days specified [1-10 days at most]
+    symbol -> stock symbol
+    interval_s -> intervals to get data in (seconds)
+    days -> how many days past data to collect
+    """
+
+    csv = csv_ret(symbol, interval_s, days)
 
     # fixing dates
     dates = fix_dates(csv, interval_s)
@@ -99,6 +108,8 @@ def find_data_days(symbol, interval_s, days):
         title = symbol + " One Day Summary"
         ax.plot_date(data_df.TIME, data_df.CLOSE,
                          color="#FFBF00", linewidth=1, fmt='-')
+        ax.plot_date(data_df.TIME, data_df.SPY,
+                     color="red", linewidth-1, fmt='--')
         ax.set_xlabel(dates[0].strftime("%b %d"))
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
         plt.xticks(rotation = 45)
