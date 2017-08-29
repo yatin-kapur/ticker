@@ -109,7 +109,7 @@ def find_data_days(symbol, interval_s, days):
         ax.plot_date(data_df.TIME, data_df.CLOSE,
                          color="#FFBF00", linewidth=1, fmt='-')
         ax.plot_date(data_df.TIME, data_df.SPY,
-                     color="red", linewidth-1, fmt='--')
+                     color="red", linewidth=1, fmt='--')
         ax.set_xlabel(dates[0].strftime("%b %d"))
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
         plt.xticks(rotation = 45)
