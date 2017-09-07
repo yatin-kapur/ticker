@@ -2,11 +2,6 @@ from ticker import app
 from flask import render_template, request
 from . import plotticker, validate
 import os
-from googlefinance import getQuotes
-import json
-import urllib
-import datetime
-import re
 from threading import Thread
 import time
 
@@ -20,23 +15,6 @@ def send():
     if request.method == 'POST':
         symbol = request.form['symbol']
         symbol = symbol.upper()
-
-        try:
-            data = json.dumps(getQuotes(symbol))
-            jdata = json.loads(data)
-            last_trade = jdata[0]['LastTradePrice']
-            last_time = jdata[0]['LastTradeDateTime']
-            if last_time == '':
-                last_time = 0
-            else:
-                last_time = last_time[:-1]
-                re.sub(last_time, 'T', ' ')
-                last_time = datetime.datetime.strptime(last_time,
-                                                       "%Y-%m-%dT%H:%M:%S")
-                last_time = last_time.strftime("%B %d, %H:%M:%S")
-        except urllib.error.HTTPError:
-            return render_template('index.html',
-                                   error='Please Enter a Valid Symbol')
 
         if validate.check(symbol) == "error":
             return render_template('index.html',
@@ -67,8 +45,7 @@ def send():
         delete_image.start()
 
         return render_template('index.html', symbol=symbol.upper(), time=time_s
-                               ,reset=1, image=image,
-                               current=[last_trade, last_time])
+                               ,reset=1, image=image)
 
     return render_template('index.html')
 
