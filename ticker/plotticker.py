@@ -49,7 +49,7 @@ def csv_ret(symbol, interval_s, days):
 
     # getting the data
     symbol = symbol.upper()
-    url = "http://www.google.com/finance/getprices?q={0}".format(symbol)
+    url = "http://finance.google.com/finance/getprices?q={0}".format(symbol)
     url += "&i={0}&p={1}d&f=d,o,h,l,c,v".format(interval_s, days)
     csv = urllib.request.urlopen(url).readlines()
 
