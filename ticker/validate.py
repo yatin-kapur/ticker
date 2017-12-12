@@ -9,7 +9,7 @@ def check(symbol):
 
     # getting the data
     symbol = symbol.upper()
-    url = "http://www.finance.google.com/finance/getprices?q={0}".format(symbol)
+    url = "http://finance.google.com/finance/getprices?q={0}".format(symbol)
     url += "&i=300&p=5d&f=d,o,h,l,c,v"
     csv = urllib.request.urlopen(url).readlines()
 
