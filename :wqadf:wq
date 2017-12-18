@@ -16,9 +16,13 @@ def send():
         symbol = request.form['symbol']
         symbol = symbol.upper()
 
+        try:
         if validate.check(symbol) == "error":
             return render_template('index.html',
                                    error='Please Enter a Valid Symbol')
+        except:
+                return render_template('index.html', symbol=symbol.upper(),
+                                       reset=1, image='static/pics/black.jpg')
 
         day_dict={'1D': 1, '5D': 5}
         mny_dict={'1M': 1, '3M': 3, '1Y': 12, '5Y': 60, '10Y': 120}
@@ -39,12 +43,8 @@ def send():
                 time_s = str(int(time_l/12)) + ' Year(s)'
             else:
                 time_s = str(time_l) + ' Month(s)'
-        try:
-            image = plotticker.data_plot(symbol, time_l, dmy)
-        except:
-            return render_template('index.html', symbol=symbol.upper(), time=time_s
-                                   ,reset=1, dead=1, image='black.jpg')
 
+        image = plotticker.data_plot(symbol, time_l, dmy)
         delete_image = Thread(target=remove, args=(image,))
         delete_image.start()
 

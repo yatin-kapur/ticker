@@ -73,6 +73,9 @@
 		<div class="col-md-5" style="margin-left:5vw; margin-right:5vw">
 			{% if reset %}
 			<h2>Stock Ticker for the Previous {{ time }} <small> {{ symbol }} </small> </h2>
+            {% if dead %}
+            <h4>data unavailable :(</h4>
+            {% endif %}
 			<img src="static/pics/{{ image }}" alt="Oops! Try refreshing the page" style="margin:auto; width:40vw; min-width:100%">
 						
 			{% endif %}
