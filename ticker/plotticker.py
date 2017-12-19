@@ -173,8 +173,9 @@ def find_data_mny(symbol, months):
                  + ',%20' + end.strftime('%Y')
 
     # finding data from google finance
-    url = "http://www.google.com/finance/historical?q={0}".format(symbol)
+    url = "http://finance.google.com/finance/historical?q={0}".format(symbol)
     url += "&startdate={0}&enddate={1}&output=csv".format(start_s, end_s)
+    print(url)
     csv = urllib.request.urlopen(url).readlines()
     csv = csv[::-1]
     csv = csv[:-1]
