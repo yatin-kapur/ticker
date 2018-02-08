@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import urllib
 import datetime
-from pytz import timezone
 import time
 
 def fix_dates(csv, interval_s):
