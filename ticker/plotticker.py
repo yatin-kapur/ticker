@@ -9,6 +9,7 @@ import urllib
 import datetime
 import time
 
+
 def fix_dates(csv, interval_s):
     """
     returns a list of dates in legible format and not unix time stamp
@@ -36,6 +37,7 @@ def fix_dates(csv, interval_s):
 
     return ret_date
 
+
 def csv_ret(symbol, interval_s, days):
     """
     returns clean csv for the symbol and time specified
@@ -56,6 +58,7 @@ def csv_ret(symbol, interval_s, days):
     csv = csv[7:]
 
     return csv
+
 
 def find_data_days(symbol, interval_s, days):
     """
@@ -152,6 +155,7 @@ def date_url(date):
     else:
         return date.strftime('%b')
 
+
 def find_data_mny(symbol, months):
     """
     finding data of the symbol for the months/years
@@ -234,6 +238,7 @@ def find_data_mny(symbol, months):
     fig.savefig('ticker/static/pics/'+filename, bbox_inches='tight', dpi=300)
 
     return filename
+
 
 def data_plot(symbol, tyme, dmy):
     """
