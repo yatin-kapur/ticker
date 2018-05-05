@@ -1,6 +1,4 @@
 import matplotlib
-matplotlib.use('Agg')
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -8,6 +6,8 @@ import matplotlib.dates as mdates
 import urllib
 import datetime
 import time
+
+matplotlib.use('Agg')
 
 
 def fix_dates(csv, interval_s):
@@ -178,6 +178,8 @@ def find_data_mny(symbol, months):
     # finding data from google finance
     url = "http://finance.google.com/finance/historical?q={0}".format(symbol)
     url += "&startdate={0}&enddate={1}&output=csv".format(start_s, end_s)
+    print(url)
+    user_agent = {'user-agent': 'Mozilla/5.0 (Windows NT 6.3; rv:36.0) Gecko/20100101 Firefox/36.0'}
     csv = urllib.request.urlopen(url).readlines()
     csv = csv[::-1]
     csv = csv[:-1]
